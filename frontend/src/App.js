@@ -1,26 +1,56 @@
-import logo from "./logo.svg";
+import React from "react";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import "./App.css";
 
-import React from "react";
+import ADMIN from "./admin";
+import USER from "./user";
 
-class App extends React.Component {
-  state = { locations: [] };
-  async componentDidMount() {
-    let hr = await fetch("http://localhost:8080/Dictionary");
-    let json = await hr.json();
-    this.setState({ locations: json });
-  }
-  render() {
-    if (this.state.locations.length === 0) {
-      return <p>loading...</p>;
-    } else {
-      let ui = this.state.locations.map((loc) => (
-        <li key={loc.id}>
-          {loc.id} - {loc.eng} - {loc.fin}
-        </li>
-      ));
-      return <ul>{ui}</ul>;
-    }
-  }
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <nav className="navbar">
+          <ul>
+            <li>
+              <Link to="/">|Main|</Link>
+            </li>
+            <li>
+              <Link to="/admin">|ADMIN|</Link>
+            </li>
+            <li>
+              <Link to="/user">|USER|</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <br></br>
+                <h1>Language APP</h1>
+                <h2>Welcome!</h2>
+                <h3>
+                  For admin, refer to ADMIN site. For user, refer to USER site.{" "}
+                  <br></br>
+                </h3>
+              </>
+            }
+          />
+
+          <Route path="admin/*" element={<ADMIN />} />
+          <Route path="user/*" element={<USER />} />
+          <Route
+            path="*"
+            element={
+              <h1 style={{ color: "red" }}>PAGE NOT FOUND! Incorrect input.</h1>
+            }
+          />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
 }
+
 export default App;
