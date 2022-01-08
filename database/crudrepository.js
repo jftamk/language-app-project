@@ -48,6 +48,19 @@ let connection = {
     }
     return new Promise(insert);
   },
+  //for DELETE REQUEST
+  deleteById: (id) => {
+    function deleteid(resolve, reject) {
+      pool.query("DELETE FROM Dictionary WHERE id=?", id, (err, words) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(id, words);
+        }
+      });
+    }
+    return new Promise(deleteid);
+  },
 };
 
 module.exports = connection;
