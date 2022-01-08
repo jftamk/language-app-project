@@ -20,6 +20,21 @@ pool.on("release", function (connection) {
   console.log("Connection %d released", connection.threadId);
 });
 
-let connection = {};
+//SQL requests
+let connection = {
+  //GET REQUEST for all items in the database Dictionary
+  findAll: () => {
+    function findall(resolve, reject) {
+      pool.query("select * from Dictionary", (err, words) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(words);
+        }
+      });
+    }
+    return new Promise(findall);
+  },
+};
 
 module.exports = connection;
