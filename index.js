@@ -26,3 +26,6 @@ const schema = {
 let dictionary = express.Router();
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
+
+var cors = require("cors");
+app.use(cors());
