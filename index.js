@@ -21,3 +21,8 @@ const schema = {
   },
   required: ["eng", "fin"],
 };
+
+//Let's create router
+let dictionary = express.Router();
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true }));
