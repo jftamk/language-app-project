@@ -9,3 +9,15 @@ const listener = app.listen(8080, () => {
 });
 
 app.use(express.static("frontend/build"));
+
+const Validator = require("jsonschema").Validator; //Validator for checking that values are right type when making POST request.
+const validator = new Validator();
+const schema = {
+  type: "object",
+  properties: {
+    id: { type: "number", minimum: 1 },
+    eng: { type: "string" },
+    fin: { type: "string" },
+  },
+  required: ["eng", "fin"],
+};
