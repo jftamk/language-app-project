@@ -36,9 +36,20 @@ app.use("/Dictionary", dictionary);
 //GET http://localhost:8080/Dictionary
 dictionary.get("/", async (req, res) => {
   try {
-    let result2 = await pool.findAll();
-    res.status(200).send(result2);
+    let result2 = await pool.findAll(); //findAll function from crudrepository
+    res.status(200).send(result2); //STATUS 200 successful response
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err); //Server encountered problem.
+  }
+});
+
+dictionary.post("/", async (req, res) => {
+  let word = req.body;
+  const validation = validator.validate(word, schema); //Check if there's validation errors
+  if (validation.errors.length > 0) {
+    res.status(400).send(validation.errors); //STATUS 400 Bad request
+  } else {
+    await pool.save(word);
+    res.status(201).send(word); //STATUS 201 Created, successful request and new resource created.
   }
 });
