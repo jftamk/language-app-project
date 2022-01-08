@@ -29,3 +29,6 @@ app.use(bp.urlencoded({ extended: true }));
 
 var cors = require("cors");
 app.use(cors());
+
+//Middleware
+app.use("/Dictionary", dictionary);
