@@ -22,7 +22,7 @@ pool.on("release", function (connection) {
 
 //SQL requests
 let connection = {
-  //GET REQUEST for all items in the database Dictionary
+  //for GET REQUEST for all items in the database Dictionary
   findAll: () => {
     function findall(resolve, reject) {
       pool.query("select * from Dictionary", (err, words) => {
@@ -34,6 +34,19 @@ let connection = {
       });
     }
     return new Promise(findall);
+  },
+  //for POST REQUEST
+  save: (word) => {
+    function insert(resolve, reject) {
+      pool.query("INSERT INTO Dictionary SET ?", word, (err, words) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(word, words);
+        }
+      });
+    }
+    return new Promise(insert);
   },
 };
 
