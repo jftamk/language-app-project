@@ -53,3 +53,10 @@ dictionary.post("/", async (req, res) => {
     res.status(201).send(word); //STATUS 201 Created, successful request and new resource created.
   }
 });
+
+//DELETE http://localhost:8080/Dictionary/3
+dictionary.delete("/:id([0-9]+)", async (req, res) => {
+  let id = req.params.id;
+  await pool.deleteById(id); //Call deleteById function from crudreposityory and take id as parameter
+  res.status(204).send(null); //STATUS 204 , no content
+});
