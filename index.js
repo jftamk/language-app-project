@@ -32,3 +32,13 @@ app.use(cors());
 
 //Middleware
 app.use("/Dictionary", dictionary);
+
+//GET http://localhost:8080/Dictionary
+dictionary.get("/", async (req, res) => {
+  try {
+    let result2 = await pool.findAll();
+    res.status(200).send(result2);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
