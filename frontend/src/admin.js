@@ -50,6 +50,25 @@ function ADMIN() {
     let inputs = document.querySelectorAll("input");
     inputs.forEach((input) => (input.value = ""));
   }
+
+  //Delete to do--------------------------------
+  async function deleteWord(id) {
+    const ok = [...state].filter((todo) => todo.id !== id);
+    const json = JSON.stringify(ok);
+    setState(ok); //Update state --> Create list where id is not included
+    console.log(id);
+    const res = await fetch("http://localhost:8080/Dictionary/" + id, {
+      method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      // body data type must match "Content-Type" header
+    });
+    return await res.json();
+  }
   return (
     <div className="Apps">
       <h1>Dictionary</h1>
