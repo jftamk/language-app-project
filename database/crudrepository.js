@@ -61,6 +61,19 @@ let connection = {
     }
     return new Promise(deleteid);
   },
+  //Select and fetch words where TAG = selected tag
+  findByTag: (tag) => {
+    function find(resolve, reject) {
+      pool.query("SELECT * FROM Dictionary WHERE tag=?", tag, (err, words) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(words);
+        }
+      });
+    }
+    return new Promise(find);
+  },
 };
 
 module.exports = connection;
