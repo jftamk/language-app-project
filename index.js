@@ -34,7 +34,7 @@ app.use(cors());
 app.use("/Dictionary", dictionary);
 
 //GET http://localhost:8080/Dictionary
-dictionary.get("/", async (req, res) => {
+dictionary.get("/All", async (req, res) => {
   try {
     let result2 = await pool.findAll(); //findAll function from crudrepository
     res.status(200).send(result2); //STATUS 200 successful response
@@ -59,4 +59,16 @@ dictionary.delete("/:id([0-9]+)", async (req, res) => {
   let id = req.params.id;
   await pool.deleteById(id); //Call deleteById function from crudreposityory and take id as parameter
   res.status(204).send(null); //STATUS 204 , no content
+});
+
+//GET http://localhost:8080/Dictionary/Colors
+//Finds words with selected TAG
+dictionary.get("/:tag([A-Z]+)", async (req, res) => {
+  try {
+    let tag = req.params.tag;
+    let result1 = await pool.findByTag(tag);
+    res.status(200).send(result1);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
