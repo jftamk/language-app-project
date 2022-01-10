@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 //import "./AdminCSS.css";
+import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
 import MenuItem from "@mui/material/MenuItem";
@@ -55,7 +56,10 @@ function ADMIN() {
                 <MenuItem value={"Other"}>Other</MenuItem>
               </Select>
             </FormControl>
-            <br></br>
+            <br></br>{" "}
+            <Button variant="contained" sx={{ my: 3, width: 200 }}>
+              Add to the list
+            </Button>
           </div>
           <br></br>
         </div>
