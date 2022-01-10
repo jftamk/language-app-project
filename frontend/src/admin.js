@@ -47,6 +47,8 @@ function ADMIN() {
     const b = init + 1;
     setInit(b);
     console.log(list);
+    let inputs = document.querySelectorAll("input");
+    inputs.forEach((input) => (input.value = ""));
   }
   return (
     <div className="Apps">
