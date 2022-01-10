@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 //import "./AdminCSS.css";
-
+import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 //Init arrays
 //const list = [];
@@ -10,7 +13,7 @@ import Input from "@mui/material/Input";
 function ADMIN() {
   const [eng, setENG] = useState(""); //Todo items
   const [fin, setFIN] = useState(""); //Todo items
-  // const [tag, setTAG] = useState(""); //Todo items
+  const [tag, setTAG] = useState(""); //Todo items
   //const [state, setState] = useState(list); //main list
   // const [init, setInit] = useState("");
 
@@ -37,6 +40,21 @@ function ADMIN() {
               value={fin}
               onChange={(e) => setFIN(e.target.value)}
             />{" "}
+            <br></br>{" "}
+            <FormControl sx={{ m: 3, width: 150 }}>
+              <InputLabel id="demo-simple-select-label">Tag</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={tag}
+                label="Age"
+                onChange={(e) => setTAG(e.target.value)}
+              >
+                <MenuItem value={"Colors"}>Colors</MenuItem>
+                <MenuItem value={"Animals"}>Animals</MenuItem>
+                <MenuItem value={"Other"}>Other</MenuItem>
+              </Select>
+            </FormControl>
             <br></br>
           </div>
           <br></br>
