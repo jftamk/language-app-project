@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import AdminTable from "./AdminTable"; //DO THIS NEXT !!!
 //import "./AdminCSS.css";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
@@ -145,6 +145,19 @@ function ADMIN() {
                   </TableCell>
                 </TableRow>
               </TableHead>
+              <TableBody>
+                {state.map((index) => {
+                  return (
+                    <AdminTable
+                      eng={index.eng}
+                      fin={index.fin}
+                      id={index.id}
+                      tag={index.tag}
+                      deleteWord={deleteWord}
+                    />
+                  );
+                })}
+              </TableBody>
             </Table>
           </TableContainer>
         </div>
