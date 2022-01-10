@@ -7,6 +7,13 @@ import Input from "@mui/material/Input";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 //Init arrays
 const list = [];
@@ -51,7 +58,7 @@ function ADMIN() {
     inputs.forEach((input) => (input.value = ""));
   }
 
-  //Delete to do--------------------------------
+  //Delete word--------------------------------
   async function deleteWord(id) {
     const ok = [...state].filter((todo) => todo.id !== id);
     const json = JSON.stringify(ok);
@@ -69,6 +76,7 @@ function ADMIN() {
     });
     return await res.json();
   }
+
   return (
     <div className="Apps">
       <h1>Dictionary</h1>
@@ -117,6 +125,28 @@ function ADMIN() {
             </Button>
           </div>
           <br></br>
+        </div>
+
+        <div classname="listdisplay">
+          <h2>DICTIONARY</h2>
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 650 }}
+              size="small"
+              aria-label="a dense table"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell>ENGLISH</TableCell>
+                  <TableCell>FINNISH</TableCell>
+                  <TableCell>TAG</TableCell>
+                  <TableCell align="center" style={{ width: "10%" }}>
+                    Delete
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+            </Table>
+          </TableContainer>
         </div>
       </div>
     </div>
