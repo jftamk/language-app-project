@@ -9,14 +9,21 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 //Init arrays
-//const list = [];
+const list = [];
 
 function ADMIN() {
   const [eng, setENG] = useState(""); //Todo items
   const [fin, setFIN] = useState(""); //Todo items
   const [tag, setTAG] = useState(""); //Todo items
-  //const [state, setState] = useState(list); //main list
-  // const [init, setInit] = useState("");
+  const [state, setState] = useState(list); //main list
+  const [init, setInit] = useState("");
+
+  //Init with the todo list--------------
+  useEffect(() => {
+    fetch("http://localhost:8080/Dictionary/All")
+      .then((response) => response.json())
+      .then((data) => setState(data));
+  }, [init]); //For handlesubmit()
 
   //Add to do item-----------------------
   async function handleSubmit(e) {
@@ -36,8 +43,10 @@ function ADMIN() {
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
     const list = await res.json();
+    //Call new state after adding item to database
+    const b = init + 1;
+    setInit(b);
     console.log(list);
-    // parses JSON response into native JavaScript objects
   }
   return (
     <div className="Apps">
