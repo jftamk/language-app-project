@@ -18,6 +18,27 @@ function ADMIN() {
   //const [state, setState] = useState(list); //main list
   // const [init, setInit] = useState("");
 
+  //Add to do item-----------------------
+  async function handleSubmit(e) {
+    const data = { eng: eng, fin: fin, tag: tag };
+    e.preventDefault();
+    const res = await fetch("http://localhost:8080/Dictionary", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    const list = await res.json();
+    console.log(list);
+    // parses JSON response into native JavaScript objects
+  }
   return (
     <div className="Apps">
       <h1>Dictionary</h1>
@@ -57,7 +78,11 @@ function ADMIN() {
               </Select>
             </FormControl>
             <br></br>{" "}
-            <Button variant="contained" sx={{ my: 3, width: 200 }}>
+            <Button
+              variant="contained"
+              sx={{ my: 3, width: 200 }}
+              onClick={handleSubmit}
+            >
               Add to the list
             </Button>
           </div>
