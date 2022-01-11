@@ -17,6 +17,7 @@ import TableCell from "@mui/material/TableCell";
 const list = [];
 var score = 0;
 var CorrectList = [];
+var WrongList = [];
 function USER(props) {
   const [state, setState] = useState(list); //main list
   const [category, setCategory] = useState(""); //Category items
@@ -24,7 +25,8 @@ function USER(props) {
   const [header, setHeader] = useState(""); //For headers
   const [result, setResult] = useState(""); //For results
   const [again, setAgain] = useState(""); //For trying again, clear all
-  const [correct, setCorrect] = useState([]);
+  const [correct, setCorrect] = useState([]); //For right answers
+  const [wrong, setWrong] = useState([]); //For wrong answers
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -55,6 +57,7 @@ function USER(props) {
             classname="textfield"
             placeholder="input the finnish word"
             onChanges={onChanges}
+            onWrong={onWrong}
           />{" "}
         </>
       );
@@ -116,9 +119,14 @@ function USER(props) {
     score++;
   }
 
+  async function onWrong(b) {
+    WrongList.push(b);
+  }
+
   async function checkresult() {
     console.log(urls);
     setCorrect("Correct answers:" + CorrectList);
+    setWrong("Wrong answers: " + WrongList);
     const check = "YOUR SCORE:" + score + "/" + state.length;
     setResult(check);
     setAgain(
@@ -133,6 +141,7 @@ function USER(props) {
     //Set the score back to 0
     score = 0;
     CorrectList = [];
+    WrongList = [];
     setResult("");
     setCorrect("");
     //Find all inputs and set their value back to empty.
@@ -188,6 +197,7 @@ function USER(props) {
               {state}
               {result}
               {correct}
+              {wrong}
               {again}
             </Table>
           </TableContainer>
