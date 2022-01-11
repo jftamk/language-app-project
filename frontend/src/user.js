@@ -23,6 +23,7 @@ function USER(props) {
   const [category, setCategory] = useState(""); //Category items
   const [urls, setURL] = useState(""); //For selecting category
   const [header, setHeader] = useState(""); //For headers
+  const [result, setResult] = useState(""); //For results
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -102,6 +103,13 @@ function USER(props) {
     score++;
   }
 
+  async function checkresult() {
+    console.log(urls);
+
+    const check = "YOUR SCORE:" + score + "/" + state.length;
+    setResult(check);
+  }
+
   return (
     <div className="Apps">
       <h1>Learn languages!</h1>
@@ -147,8 +155,16 @@ function USER(props) {
               {" "}
               {header}
               {state}
+              {result}
             </Table>
           </TableContainer>
+          <Button
+            variant="contained"
+            sx={{ m: 3, width: 200 }}
+            onClick={checkresult}
+          >
+            Check results
+          </Button>
         </div>
       </div>
     </div>
