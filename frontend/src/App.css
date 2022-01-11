@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 .App {
-  content-visibility: visible;
   text-align: center;
   background-color: #e6e6e6;
   display: flex;
@@ -10,6 +9,7 @@
   align-items: center;
   justify-content: center;
   font-family: Arial, Helvetica, sans-serif;
+  padding: 50px;
 }
 ul {
   list-style-type: none;
