@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import AdminTable from "./AdminTable"; //DO THIS NEXT !!!
-//import "./AdminCSS.css";
+import AdminTable from "./AdminTable";
+
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
@@ -102,12 +102,12 @@ function ADMIN() {
             />{" "}
             <br></br>{" "}
             <FormControl sx={{ m: 3, width: 150 }}>
-              <InputLabel id="demo-simple-select-label">Tag</InputLabel>
+              <InputLabel id="simple-select-label">Category</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="simple-select-label"
+                id="simple-select"
                 value={tag}
-                label="Age"
+                label="category"
                 onChange={(e) => setTAG(e.target.value)}
               >
                 <MenuItem value={"Colors"}>Colors</MenuItem>
@@ -139,7 +139,7 @@ function ADMIN() {
                 <TableRow>
                   <TableCell>ENGLISH</TableCell>
                   <TableCell>FINNISH</TableCell>
-                  <TableCell>TAG</TableCell>
+                  <TableCell>Category</TableCell>
                   <TableCell align="center" style={{ width: "10%" }}>
                     Delete
                   </TableCell>
