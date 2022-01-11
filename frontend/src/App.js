@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import "./App.css";
-
 import ADMIN from "./admin";
 import USER from "./user";
 
@@ -32,8 +31,8 @@ function App() {
                 <h1>Language APP</h1>
                 <h2>Welcome!</h2>
                 <h3>
-                  For admin, refer to ADMIN site. For user, refer to USER site.{" "}
-                  <br></br>
+                  If you are admin, move to the ADMIN site. If you are user,
+                  move to the USER site. <br></br>
                 </h3>
               </>
             }
