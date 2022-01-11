@@ -9,7 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 //Init arrays
 const list = [];
-
+var score = 0;
 function USER(props) {
   const [eng, setENG] = useState(""); //English words
   const [fin, setFIN] = useState(""); //Finnish words
@@ -26,6 +26,7 @@ function USER(props) {
     fetchData();
   }, [category]);
 
+  //Fetch where English visible and Finnish as input
   const getEnglish = async () => {
     const result = await fetch(urls);
     const list = await result.json();
@@ -47,7 +48,7 @@ function USER(props) {
     console.log(ui);
     setState(ui);
   };
-
+  //Fetch where Finnish visible and English as input
   const getFinnish = async () => {
     const result = await fetch(urls);
     const list2 = await result.json();
@@ -69,6 +70,13 @@ function USER(props) {
     console.log(ui);
     setState(ui);
   };
+
+  async function onChanges(b) {
+    //  console.log(b);
+
+    score++;
+  }
+
   return (
     <div className="Apps">
       <h1>Learn languages!</h1>
