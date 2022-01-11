@@ -16,6 +16,7 @@ import TableCell from "@mui/material/TableCell";
 //Init arrays
 const list = [];
 var score = 0;
+var CorrectList = [];
 function USER(props) {
   const [state, setState] = useState(list); //main list
   const [category, setCategory] = useState(""); //Category items
@@ -107,6 +108,7 @@ function USER(props) {
   };
 
   async function onChanges(b) {
+    CorrectList.push(b);
     //  console.log(b);
 
     score++;
@@ -114,7 +116,7 @@ function USER(props) {
 
   async function checkresult() {
     console.log(urls);
-
+    setCorrect("Correct answers:" + CorrectList);
     const check = "YOUR SCORE:" + score + "/" + state.length;
     setResult(check);
     setAgain(
@@ -128,7 +130,9 @@ function USER(props) {
     //Try again
     //Set the score back to 0
     score = 0;
+    CorrectList = [];
     setResult("");
+    setCorrect("");
     //Find all inputs and set their value back to empty.
     let inputs = document.querySelectorAll("input");
     inputs.forEach((input) => (input.value = ""));
@@ -181,6 +185,7 @@ function USER(props) {
               {header}
               {state}
               {result}
+              {correct}
               {again}
             </Table>
           </TableContainer>
