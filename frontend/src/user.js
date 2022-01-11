@@ -7,6 +7,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Table from "@mui/material/Table";
+import Paper from "@mui/material/Paper";
+import TableContainer from "@mui/material/TableContainer";
 //Init arrays
 const list = [];
 var score = 0;
@@ -111,6 +114,19 @@ function USER(props) {
           <MenuItem value={"All"}>All</MenuItem>
         </Select>
       </FormControl>
+      <div classname="listdisplay">
+        <div className="dictionary">
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 650 }}
+              size="small"
+              aria-label="a dense table"
+            >
+              {state}
+            </Table>
+          </TableContainer>
+        </div>
+      </div>
     </div>
   );
 }
