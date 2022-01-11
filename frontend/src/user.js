@@ -15,9 +15,19 @@ function USER(props) {
   const [fin, setFIN] = useState(""); //Finnish words
   const [state, setState] = useState(list); //main list
   const [category, setCategory] = useState(""); //Category items
+  const [urls, setURL] = useState(""); //For selecting category
+
+  //Fetch list with selected category--------------
+  useEffect(() => {
+    const fetchData = async () => {
+      setURL("http://localhost:8080/Dictionary/" + category);
+    };
+
+    fetchData();
+  }, [category]);
 
   const getEnglish = async () => {
-    const result = await fetch("http://localhost:8080/Dictionary");
+    const result = await fetch(urls);
     const list = await result.json();
     const ui = list.map((index) => {
       return (
@@ -39,7 +49,7 @@ function USER(props) {
   };
 
   const getFinnish = async () => {
-    const result = await fetch("http://localhost:8080/Dictionary");
+    const result = await fetch(urls);
     const list2 = await result.json();
 
     const ui = list2.map((index) => {
