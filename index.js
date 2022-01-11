@@ -18,8 +18,9 @@ const schema = {
     id: { type: "number", minimum: 1 },
     eng: { type: "string" },
     fin: { type: "string" },
+    tag: { type: "string" },
   },
-  required: ["eng", "fin"],
+  required: ["eng", "fin", "tag"],
 };
 
 //Let's create router
