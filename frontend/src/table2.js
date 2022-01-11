@@ -7,11 +7,14 @@ function TableComp2(props) {
   const { type, name, placeholder } = props;
   async function afterInput(e) {
     const a = e.target.value;
-    //If input === finnish word from database, call onChanges function in user.js --> TODO onChanges,user.js
-    if (a === props.finnish) {
-      props.onChanges(a);
+    //If input === finnish word from database, call onChanges function in user.js
+    if (a === props.eng) {
+      props.onChanges(a, props.finnish);
+    } else {
+      props.onWrong(a, props.finnish);
     }
   }
+
   return (
     <>
       <TableRow>
