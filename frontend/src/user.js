@@ -8,10 +8,31 @@ import Button from "@mui/material/Button";
 const list = [];
 
 function USER(props) {
-  const [eng, setENG] = useState(""); //Todo items
-  const [fin, setFIN] = useState(""); //Todo items
+  const [eng, setENG] = useState(""); //English words
+  const [fin, setFIN] = useState(""); //Finnish words
   const [state, setState] = useState(list); //main list
 
+  const getFinnish = async () => {
+    const result = await fetch("http://localhost:8080/Dictionary");
+    const list2 = await result.json();
+
+    const ui = list2.map((index) => {
+      return (
+        <>
+          <TableComp2
+            eng={index.eng}
+            id={index.id}
+            finnish={index.fin}
+            classname="textfield"
+            placeholder="type english"
+            onChanges={onChanges}
+          />{" "}
+        </>
+      );
+    });
+    console.log(ui);
+    setState(ui);
+  };
   return (
     <div className="Apps">
       <h1>Learn languages!</h1>
