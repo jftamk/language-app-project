@@ -142,83 +142,100 @@ function USER(props) {
 
   async function checkresult() {
     console.log(urls);
-
-    const check = "YOUR SCORE:" + score + "/" + state.length;
-    setResult(check);
-    if (score === state.length) {
+    if (state === list) {
       setAlert(
         <Alert
           onClose={() => {
             setAlert("");
           }}
+          variant="filled"
+          severity="error"
         >
-          Congratulations! All words correct
+          No answers yet!
         </Alert>
       );
     } else {
-      setAlert("");
+      const check = "YOUR SCORE: " + score + "/" + state.length;
+      setResult(check);
+
+      if (score === state.length) {
+        setAlert(
+          <Alert
+            onClose={() => {
+              setAlert("");
+            }}
+          >
+            Congratulations! All words correct
+          </Alert>
+        );
+      } else {
+        setAlert("");
+      }
+
+      setAgain(
+        <Button
+          variant="contained"
+          sx={{ m: 3, width: 200 }}
+          onClick={TryAgain}
+        >
+          Try again
+        </Button>
+      );
+      //Fetch english list
+      console.log(answerlist);
+      const checked = answerlist.map((index) => {
+        return (
+          <>
+            <TableRow>
+              <TableCell> {index.eng}</TableCell>
+
+              <TableCell style={{ backgroundColor: "lightgreen" }}>
+                {" "}
+                {index.correct}
+              </TableCell>
+              <TableCell style={{ backgroundColor: "#FFD2D2" }}>
+                {" "}
+                {index.wrong}
+              </TableCell>
+            </TableRow>
+          </>
+        );
+      });
+      state1 = state;
+      setState("");
+
+      if (lang === "eng") {
+        setHeader(
+          <TableHead>
+            <TableRow>
+              <TableCell>ENGLISH</TableCell>
+              <TableCell style={{ backgroundColor: "lightgreen" }}>
+                CORRECT
+              </TableCell>
+              <TableCell style={{ backgroundColor: "#FFD2D2" }}>
+                INCORRECT
+              </TableCell>
+            </TableRow>
+          </TableHead>
+        );
+      } else {
+        setHeader(
+          <TableHead>
+            <TableRow>
+              <TableCell>FINNISH</TableCell>
+              <TableCell style={{ backgroundColor: "lightgreen" }}>
+                CORRECT
+              </TableCell>
+              <TableCell style={{ backgroundColor: "#FFD2D2" }}>
+                INCORRECT
+              </TableCell>
+            </TableRow>
+          </TableHead>
+        );
+      }
+      setAnswers(checked);
     }
-
-    setAgain(
-      <Button variant="contained" sx={{ m: 3, width: 200 }} onClick={TryAgain}>
-        Try again
-      </Button>
-    );
-    //Fetch english list
-    console.log(answerlist);
-    const checked = answerlist.map((index) => {
-      return (
-        <>
-          <TableRow>
-            <TableCell> {index.eng}</TableCell>
-
-            <TableCell style={{ backgroundColor: "lightgreen" }}>
-              {" "}
-              {index.correct}
-            </TableCell>
-            <TableCell style={{ backgroundColor: "#FFD2D2" }}>
-              {" "}
-              {index.wrong}
-            </TableCell>
-          </TableRow>
-        </>
-      );
-    });
-    state1 = state;
-    setState("");
-
-    if (lang === "eng") {
-      setHeader(
-        <TableHead>
-          <TableRow>
-            <TableCell>ENGLISH</TableCell>
-            <TableCell style={{ backgroundColor: "lightgreen" }}>
-              CORRECT
-            </TableCell>
-            <TableCell style={{ backgroundColor: "#FFD2D2" }}>
-              INCORRECT
-            </TableCell>
-          </TableRow>
-        </TableHead>
-      );
-    } else {
-      setHeader(
-        <TableHead>
-          <TableRow>
-            <TableCell>FINNISH</TableCell>
-            <TableCell style={{ backgroundColor: "lightgreen" }}>
-              CORRECT
-            </TableCell>
-            <TableCell style={{ backgroundColor: "#FFD2D2" }}>
-              INCORRECT
-            </TableCell>
-          </TableRow>
-        </TableHead>
-      );
-    }
-    setAnswers(checked);
   }
-
   async function TryAgain() {
     //Try again
     //Set the score back to 0
@@ -272,6 +289,7 @@ function USER(props) {
         >
           <MenuItem value={"Colors"}>Colors</MenuItem>
           <MenuItem value={"Animals"}>Animals</MenuItem>
+          <MenuItem value={"Vehicles"}>Vehicles</MenuItem>
           <MenuItem value={"Other"}>Other</MenuItem>
           <MenuItem value={"All"}>All</MenuItem>
         </Select>
@@ -292,7 +310,25 @@ function USER(props) {
               </TableBody>
             </Table>
           </TableContainer>{" "}
-          {result}
+          <br></br>
+          <div
+            className="result"
+            style={{
+              margin: "30",
+              fontSize: "large",
+              textDecoration: "underline",
+            }}
+          >
+            <Alert
+              variant="filled"
+              severity="info"
+              size="large"
+              align="center"
+              sx={{ m: 3, width: 200 }}
+            >
+              {result}
+            </Alert>
+          </div>
           {alert}
           {again}
           <Button
