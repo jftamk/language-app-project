@@ -16,13 +16,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import { backdropUnstyledClasses } from "@mui/material";
+
 //Init arrays
 const list = [];
 var score = 0;
 
-var test = [];
-
+var answerlist = [];
+var state1 = [];
 function USER(props) {
   const [state, setState] = useState(list); //main list
   const [category, setCategory] = useState(""); //Category items
@@ -30,6 +30,7 @@ function USER(props) {
   const [header, setHeader] = useState(""); //For headers
   const [result, setResult] = useState(""); //For results
   const [again, setAgain] = useState(""); //For trying again, clear all
+  const [answers, setAnswers] = useState(""); //For trying again, clear all
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -119,7 +120,7 @@ function USER(props) {
   };
 
   async function onChanges(b, a) {
-    test.push({ eng: a, correct: b });
+    answerlist.push({ eng: a, correct: b });
     console.log(b);
     console.log(a);
 
@@ -127,7 +128,7 @@ function USER(props) {
   }
 
   async function onWrong(b, a) {
-    test.push({ eng: a, wrong: b });
+    answerlist.push({ eng: a, wrong: b });
     console.log(b);
     console.log(a);
   }
@@ -146,7 +147,7 @@ function USER(props) {
     const result = await fetch(urls);
     const list2 = await result.json();
     console.log(list2);
-    const checked = test.map((index) => {
+    const checked = answerlist.map((index) => {
       return (
         <>
           <TableRow>
@@ -164,7 +165,8 @@ function USER(props) {
         </>
       );
     });
-    setState(checked);
+    state1 = state;
+    setState("");
     setHeader(
       <TableHead>
         <TableRow>
@@ -178,15 +180,25 @@ function USER(props) {
         </TableRow>
       </TableHead>
     );
+    setAnswers(checked);
   }
 
   async function TryAgain() {
     //Try again
     //Set the score back to 0
     score = 0;
-
+    answerlist = [];
+    setState(state1);
     setResult("");
-
+    setAnswers("");
+    setHeader(
+      <TableHead>
+        <TableRow>
+          <TableCell>ENGLISH</TableCell>
+          <TableCell>FINNISH</TableCell>
+        </TableRow>
+      </TableHead>
+    );
     //Find all inputs and set their value back to empty.
     let inputs = document.querySelectorAll("input");
     inputs.forEach((input) => (input.value = ""));
@@ -237,7 +249,10 @@ function USER(props) {
             >
               {" "}
               {header}
-              <TableBody>{state}</TableBody>
+              <TableBody>
+                {state}
+                {answers}
+              </TableBody>
             </Table>
           </TableContainer>{" "}
           {result} {again}
