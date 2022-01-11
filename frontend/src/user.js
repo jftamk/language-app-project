@@ -17,14 +17,13 @@ import TableCell from "@mui/material/TableCell";
 const list = [];
 var score = 0;
 function USER(props) {
-  const [eng, setENG] = useState(""); //English words
-  const [fin, setFIN] = useState(""); //Finnish words
   const [state, setState] = useState(list); //main list
   const [category, setCategory] = useState(""); //Category items
   const [urls, setURL] = useState(""); //For selecting category
   const [header, setHeader] = useState(""); //For headers
   const [result, setResult] = useState(""); //For results
   const [again, setAgain] = useState(""); //For trying again, clear all
+  const [correct, setCorrect] = useState([]);
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -37,6 +36,11 @@ function USER(props) {
 
   //Fetch where English visible and Finnish as input
   const getEnglish = async () => {
+    //Clear after calling
+    score = 0;
+    setResult("");
+    setAgain("");
+    //Fetch english list
     const result = await fetch(urls);
     const list = await result.json();
     const ui = list.map((index) => {
@@ -68,9 +72,13 @@ function USER(props) {
   };
   //Fetch where Finnish visible and English as input
   const getFinnish = async () => {
+    //Clear after calling
+    score = 0;
+    setResult("");
+    setAgain("");
+    //Fetch finnish list
     const result = await fetch(urls);
     const list2 = await result.json();
-
     const ui = list2.map((index) => {
       return (
         <>
