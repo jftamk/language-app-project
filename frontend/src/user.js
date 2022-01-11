@@ -41,6 +41,7 @@ function USER(props) {
     score = 0;
     setResult("");
     setAgain("");
+    setCorrect("");
     //Fetch english list
     const result = await fetch(urls);
     const list = await result.json();
@@ -77,6 +78,7 @@ function USER(props) {
     score = 0;
     setResult("");
     setAgain("");
+    setCorrect("");
     //Fetch finnish list
     const result = await fetch(urls);
     const list2 = await result.json();
