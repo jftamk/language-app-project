@@ -4,7 +4,8 @@
   "description": "This project work is for Backend development course.\r # Purpose\r The purpose of this project is to make an application that can be used to train kids with with foreign language grammar.\r # Technologies\r -Frontend with React",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
