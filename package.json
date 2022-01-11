@@ -1,0 +1,26 @@
+{
+  "name": "language-app-project",
+  "version": "1.0.0",
+  "description": "This project work is for Backend development course.\r # Purpose\r The purpose of this project is to make an application that can be used to train kids with with foreign language grammar.\r # Technologies\r -Frontend with React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jftamk/language-app-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jftamk/language-app-project/issues"
+  },
+  "homepage": "https://github.com/jftamk/language-app-project#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "jsonschema": "^1.4.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15"
+  }
+}
