@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import TableComp from "./table.js";
 import TableComp2 from "./table2.js";
+import CorrectTable from "./correct.js";
+import WrongTable from "./wrong";
 
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,11 +15,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
+import { backdropUnstyledClasses } from "@mui/material";
 //Init arrays
 const list = [];
 var score = 0;
 var CorrectList = [];
 var WrongList = [];
+var test = [];
+
 function USER(props) {
   const [state, setState] = useState(list); //main list
   const [category, setCategory] = useState(""); //Category items
@@ -27,6 +33,7 @@ function USER(props) {
   const [again, setAgain] = useState(""); //For trying again, clear all
   const [correct, setCorrect] = useState([]); //For right answers
   const [wrong, setWrong] = useState([]); //For wrong answers
+  const [TableHeaderC, setTableHeaderC] = useState("");
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -38,12 +45,16 @@ function USER(props) {
   }, [category]);
 
   //Fetch where English visible and Finnish as input
+  /**
+   * @return {state} with English visible and Finnish as input
+   */
   const getEnglish = async () => {
     //Clear after calling
     score = 0;
     setResult("");
     setAgain("");
     setCorrect("");
+    setWrong("");
     //Fetch english list
     const result = await fetch(urls);
     const list = await result.json();
@@ -82,6 +93,7 @@ function USER(props) {
     setResult("");
     setAgain("");
     setCorrect("");
+    setWrong("");
     //Fetch finnish list
     const result = await fetch(urls);
     const list2 = await result.json();
@@ -112,21 +124,44 @@ function USER(props) {
     );
   };
 
-  async function onChanges(b) {
-    CorrectList.push(b);
-    //  console.log(b);
-
+  async function onChanges(b, a) {
+    test.push({ eng: a, correct: b });
+    console.log(b);
+    console.log(a);
+    var colGreen = "green";
     score++;
   }
 
-  async function onWrong(b) {
-    WrongList.push(b);
+  async function onWrong(b, a) {
+    test.push({ eng: a, wrong: b });
+    console.log(b);
+    console.log(a);
+    var colRed = "red";
+  }
+
+  async function Correct() {
+    setTableHeaderC(
+      <TableHead>
+        <TableRow>
+          <TableCell>CORRECT</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+
+    const rightlist = CorrectList.map((index) => {
+      return (
+        <>
+          <CorrectTable word={index} />{" "}
+        </>
+      );
+    });
+    setCorrect(rightlist);
   }
 
   async function checkresult() {
     console.log(urls);
-    setCorrect("Correct answers:" + CorrectList);
-    setWrong("Wrong answers: " + WrongList);
+    Correct();
+
     const check = "YOUR SCORE:" + score + "/" + state.length;
     setResult(check);
     setAgain(
@@ -134,8 +169,44 @@ function USER(props) {
         Try again
       </Button>
     );
+    //Fetch english list
+    const result = await fetch(urls);
+    const list2 = await result.json();
+    console.log(list2);
+    const checked = test.map((index) => {
+      return (
+        <>
+          <TableRow>
+            <TableCell> {index.eng}</TableCell>
+
+            <TableCell style={{ backgroundColor: "lightgreen" }}>
+              {" "}
+              {index.correct}
+            </TableCell>
+            <TableCell style={{ backgroundColor: "#FFD2D2" }}>
+              {" "}
+              {index.wrong}
+            </TableCell>
+          </TableRow>
+        </>
+      );
+    });
+    setState(checked);
+    setHeader(
+      <TableHead>
+        <TableRow>
+          <TableCell>ENGLISH</TableCell>
+          <TableCell style={{ backgroundColor: "lightgreen" }}>
+            CORRECT
+          </TableCell>
+          <TableCell style={{ backgroundColor: "#FFD2D2" }}>
+            INCORRECT
+          </TableCell>
+        </TableRow>
+      </TableHead>
+    );
   }
-  //Try again -- clear all
+
   async function TryAgain() {
     //Try again
     //Set the score back to 0
@@ -143,7 +214,7 @@ function USER(props) {
     CorrectList = [];
     WrongList = [];
     setResult("");
-    setCorrect("");
+
     //Find all inputs and set their value back to empty.
     let inputs = document.querySelectorAll("input");
     inputs.forEach((input) => (input.value = ""));
@@ -163,7 +234,7 @@ function USER(props) {
       </Button>
       <Button
         variant="contained"
-        color="error"
+        color="secondary"
         sx={{ m: 3, width: 200 }}
         onClick={getFinnish}
       >
@@ -194,13 +265,10 @@ function USER(props) {
             >
               {" "}
               {header}
-              {state}
-              {result}
-              {correct}
-              {wrong}
-              {again}
+              <TableBody>{state}</TableBody>
             </Table>
-          </TableContainer>
+          </TableContainer>{" "}
+          {result} {again}
           <Button
             variant="contained"
             sx={{ m: 3, width: 200 }}
