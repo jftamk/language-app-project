@@ -10,6 +10,9 @@ import Select from "@mui/material/Select";
 import Table from "@mui/material/Table";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
 //Init arrays
 const list = [];
 var score = 0;
@@ -19,6 +22,7 @@ function USER(props) {
   const [state, setState] = useState(list); //main list
   const [category, setCategory] = useState(""); //Category items
   const [urls, setURL] = useState(""); //For selecting category
+  const [header, setHeader] = useState(""); //For headers
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -50,6 +54,15 @@ function USER(props) {
 
     console.log(ui);
     setState(ui);
+    //Set headers for table
+    setHeader(
+      <TableHead>
+        <TableRow>
+          <TableCell>ENGLISH</TableCell>
+          <TableCell>FINNISH</TableCell>
+        </TableRow>
+      </TableHead>
+    );
   };
   //Fetch where Finnish visible and English as input
   const getFinnish = async () => {
@@ -72,6 +85,15 @@ function USER(props) {
     });
     console.log(ui);
     setState(ui);
+    //Set headers for table
+    setHeader(
+      <TableHead>
+        <TableRow>
+          <TableCell>ENGLISH</TableCell>
+          <TableCell>FINNISH</TableCell>
+        </TableRow>
+      </TableHead>
+    );
   };
 
   async function onChanges(b) {
@@ -122,6 +144,8 @@ function USER(props) {
               size="small"
               aria-label="a dense table"
             >
+              {" "}
+              {header}
               {state}
             </Table>
           </TableContainer>
