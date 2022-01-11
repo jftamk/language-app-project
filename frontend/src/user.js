@@ -16,6 +16,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
+import { Alert } from "@mui/material";
 
 //Init arrays
 const list = [];
@@ -31,6 +32,7 @@ function USER(props) {
   const [result, setResult] = useState(""); //For results
   const [again, setAgain] = useState(""); //For trying again, clear all
   const [answers, setAnswers] = useState(""); //For trying again, clear all
+  const [alert, setAlert] = useState("");
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -50,7 +52,9 @@ function USER(props) {
     score = 0;
     setResult("");
     setAgain("");
-
+    setAlert("");
+    setAnswers("");
+    answerlist = [];
     //Fetch english list
     const result = await fetch(urls);
     const list = await result.json();
@@ -86,9 +90,11 @@ function USER(props) {
   const getFinnish = async () => {
     //Clear after calling
     score = 0;
+    answerlist = [];
+    setAnswers("");
     setResult("");
     setAgain("");
-
+    setAlert("");
     //Fetch finnish list
     const result = await fetch(urls);
     const list2 = await result.json();
@@ -138,6 +144,20 @@ function USER(props) {
 
     const check = "YOUR SCORE:" + score + "/" + state.length;
     setResult(check);
+    if (score === state.length) {
+      setAlert(
+        <Alert
+          onClose={() => {
+            setAlert("");
+          }}
+        >
+          Congratulations! All words correct
+        </Alert>
+      );
+    } else {
+      setAlert("");
+    }
+
     setAgain(
       <Button variant="contained" sx={{ m: 3, width: 200 }} onClick={TryAgain}>
         Try again
@@ -191,6 +211,7 @@ function USER(props) {
     setState(state1);
     setResult("");
     setAnswers("");
+    setAlert("");
     setHeader(
       <TableHead>
         <TableRow>
@@ -255,7 +276,9 @@ function USER(props) {
               </TableBody>
             </Table>
           </TableContainer>{" "}
-          {result} {again}
+          {result}
+          {alert}
+          {again}
           <Button
             variant="contained"
             sx={{ m: 3, width: 200 }}
