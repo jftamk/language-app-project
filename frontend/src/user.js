@@ -20,8 +20,7 @@ import { backdropUnstyledClasses } from "@mui/material";
 //Init arrays
 const list = [];
 var score = 0;
-var CorrectList = [];
-var WrongList = [];
+
 var test = [];
 
 function USER(props) {
@@ -31,9 +30,6 @@ function USER(props) {
   const [header, setHeader] = useState(""); //For headers
   const [result, setResult] = useState(""); //For results
   const [again, setAgain] = useState(""); //For trying again, clear all
-  const [correct, setCorrect] = useState([]); //For right answers
-  const [wrong, setWrong] = useState([]); //For wrong answers
-  const [TableHeaderC, setTableHeaderC] = useState("");
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -53,8 +49,7 @@ function USER(props) {
     score = 0;
     setResult("");
     setAgain("");
-    setCorrect("");
-    setWrong("");
+
     //Fetch english list
     const result = await fetch(urls);
     const list = await result.json();
@@ -92,8 +87,7 @@ function USER(props) {
     score = 0;
     setResult("");
     setAgain("");
-    setCorrect("");
-    setWrong("");
+
     //Fetch finnish list
     const result = await fetch(urls);
     const list2 = await result.json();
@@ -128,7 +122,7 @@ function USER(props) {
     test.push({ eng: a, correct: b });
     console.log(b);
     console.log(a);
-    var colGreen = "green";
+
     score++;
   }
 
@@ -136,31 +130,10 @@ function USER(props) {
     test.push({ eng: a, wrong: b });
     console.log(b);
     console.log(a);
-    var colRed = "red";
-  }
-
-  async function Correct() {
-    setTableHeaderC(
-      <TableHead>
-        <TableRow>
-          <TableCell>CORRECT</TableCell>
-        </TableRow>
-      </TableHead>
-    );
-
-    const rightlist = CorrectList.map((index) => {
-      return (
-        <>
-          <CorrectTable word={index} />{" "}
-        </>
-      );
-    });
-    setCorrect(rightlist);
   }
 
   async function checkresult() {
     console.log(urls);
-    Correct();
 
     const check = "YOUR SCORE:" + score + "/" + state.length;
     setResult(check);
@@ -211,8 +184,7 @@ function USER(props) {
     //Try again
     //Set the score back to 0
     score = 0;
-    CorrectList = [];
-    WrongList = [];
+
     setResult("");
 
     //Find all inputs and set their value back to empty.
