@@ -37,7 +37,19 @@ function ADMIN() {
   async function handleSubmit(e) {
     const data = { eng: eng, fin: fin, tag: tag };
     e.preventDefault();
-    if (eng === "" || fin === "" || tag === "") {
+    if (eng === "") {
+      setAlert(
+        <Alert variant="filled" severity="error">
+          Add english word!
+        </Alert>
+      );
+    } else if (fin === "") {
+      setAlert(
+        <Alert variant="filled" severity="error">
+          Add finnish word!
+        </Alert>
+      );
+    } else if (tag === "") {
       setAlert(
         <Alert variant="filled" severity="error">
           Choose category!
@@ -72,6 +84,12 @@ function ADMIN() {
           New word added successfully!
         </Alert>
       );
+      setFIN("");
+      setENG("");
+      setTAG("");
+      setTimeout(() => {
+        setAlert("");
+      }, 3000);
     }
   }
 
