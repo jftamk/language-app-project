@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import TableComp from "./table.js";
 import TableComp2 from "./table2.js";
-import CorrectTable from "./correct.js";
-import WrongTable from "./wrong";
 
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
@@ -21,7 +19,7 @@ import { Alert } from "@mui/material";
 //Init arrays
 const list = [];
 var score = 0;
-
+var lang = "";
 var answerlist = [];
 var state1 = [];
 function USER(props) {
@@ -50,6 +48,7 @@ function USER(props) {
   const getEnglish = async () => {
     //Clear after calling
     score = 0;
+    lang = "eng";
     setResult("");
     setAgain("");
     setAlert("");
@@ -90,6 +89,7 @@ function USER(props) {
   const getFinnish = async () => {
     //Clear after calling
     score = 0;
+    lang = "fin";
     answerlist = [];
     setAnswers("");
     setResult("");
@@ -108,6 +108,7 @@ function USER(props) {
             classname="textfield"
             placeholder="type english"
             onChanges={onChanges}
+            onWrong={onWrong}
           />{" "}
         </>
       );
@@ -164,9 +165,7 @@ function USER(props) {
       </Button>
     );
     //Fetch english list
-    const result = await fetch(urls);
-    const list2 = await result.json();
-    console.log(list2);
+    console.log(answerlist);
     const checked = answerlist.map((index) => {
       return (
         <>
@@ -187,19 +186,36 @@ function USER(props) {
     });
     state1 = state;
     setState("");
-    setHeader(
-      <TableHead>
-        <TableRow>
-          <TableCell>ENGLISH</TableCell>
-          <TableCell style={{ backgroundColor: "lightgreen" }}>
-            CORRECT
-          </TableCell>
-          <TableCell style={{ backgroundColor: "#FFD2D2" }}>
-            INCORRECT
-          </TableCell>
-        </TableRow>
-      </TableHead>
-    );
+
+    if (lang === "eng") {
+      setHeader(
+        <TableHead>
+          <TableRow>
+            <TableCell>ENGLISH</TableCell>
+            <TableCell style={{ backgroundColor: "lightgreen" }}>
+              CORRECT
+            </TableCell>
+            <TableCell style={{ backgroundColor: "#FFD2D2" }}>
+              INCORRECT
+            </TableCell>
+          </TableRow>
+        </TableHead>
+      );
+    } else {
+      setHeader(
+        <TableHead>
+          <TableRow>
+            <TableCell>FINNISH</TableCell>
+            <TableCell style={{ backgroundColor: "lightgreen" }}>
+              CORRECT
+            </TableCell>
+            <TableCell style={{ backgroundColor: "#FFD2D2" }}>
+              INCORRECT
+            </TableCell>
+          </TableRow>
+        </TableHead>
+      );
+    }
     setAnswers(checked);
   }
 
