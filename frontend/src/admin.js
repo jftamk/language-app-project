@@ -19,11 +19,11 @@ import Paper from "@mui/material/Paper";
 const list = [];
 
 function ADMIN() {
-  const [eng, setENG] = useState(""); //Todo items
-  const [fin, setFIN] = useState(""); //Todo items
-  const [tag, setTAG] = useState(""); //Todo items
+  const [eng, setENG] = useState(""); //English words
+  const [fin, setFIN] = useState(""); //Finnish words
+  const [tag, setTAG] = useState(""); //Categories
   const [state, setState] = useState(list); //main list
-  const [init, setInit] = useState("");
+  const [init, setInit] = useState(""); //Call useEffect on change
 
   //Init with the todo list--------------
   useEffect(() => {
