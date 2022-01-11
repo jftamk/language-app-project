@@ -14,6 +14,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Alert } from "@mui/material";
 
 //Init arrays
 const list = [];
@@ -24,7 +25,7 @@ function ADMIN() {
   const [tag, setTAG] = useState(""); //Categories
   const [state, setState] = useState(list); //main list
   const [init, setInit] = useState(""); //Call useEffect on change
-
+  const [alert, setAlert] = useState("");
   //Init with the todo list--------------
   useEffect(() => {
     fetch("http://localhost:8080/Dictionary/All")
@@ -36,26 +37,31 @@ function ADMIN() {
   async function handleSubmit(e) {
     const data = { eng: eng, fin: fin, tag: tag };
     e.preventDefault();
-    const res = await fetch("http://localhost:8080/Dictionary", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    });
-    const list = await res.json();
-    //Call new state after adding item to database
-    const b = init + 1;
-    setInit(b);
-    console.log(list);
-    let inputs = document.querySelectorAll("input");
-    inputs.forEach((input) => (input.value = ""));
+    if (eng === "" || fin === "" || tag === "") {
+      setAlert(<Alert severity="error">Choose category!</Alert>);
+    } else {
+      const res = await fetch("http://localhost:8080/Dictionary", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      });
+      const list = await res.json();
+      //Call new state after adding item to database
+      const b = init + 1;
+      setInit(b);
+      console.log(list);
+      let inputs = document.querySelectorAll("input");
+      inputs.forEach((input) => (input.value = ""));
+      setAlert("");
+    }
   }
 
   //Delete word--------------------------------
@@ -115,7 +121,7 @@ function ADMIN() {
                 <MenuItem value={"Other"}>Other</MenuItem>
               </Select>
             </FormControl>
-            <br></br>{" "}
+            {alert};<br></br>{" "}
             <Button
               variant="contained"
               sx={{ my: 3, width: 200 }}
