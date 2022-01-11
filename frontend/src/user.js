@@ -24,6 +24,7 @@ function USER(props) {
   const [urls, setURL] = useState(""); //For selecting category
   const [header, setHeader] = useState(""); //For headers
   const [result, setResult] = useState(""); //For results
+  const [again, setAgain] = useState(""); //For trying again, clear all
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -108,6 +109,22 @@ function USER(props) {
 
     const check = "YOUR SCORE:" + score + "/" + state.length;
     setResult(check);
+    setAgain(
+      <Button variant="contained" sx={{ m: 3, width: 200 }} onClick={TryAgain}>
+        Try again
+      </Button>
+    );
+  }
+  //Try again -- clear all
+  async function TryAgain() {
+    //Try again
+    //Set the score back to 0
+    score = 0;
+    setResult("");
+    //Find all inputs and set their value back to empty.
+    let inputs = document.querySelectorAll("input");
+    inputs.forEach((input) => (input.value = ""));
+    setAgain("");
   }
 
   return (
@@ -156,6 +173,7 @@ function USER(props) {
               {header}
               {state}
               {result}
+              {again}
             </Table>
           </TableContainer>
           <Button
