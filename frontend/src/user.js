@@ -12,6 +12,28 @@ function USER(props) {
   const [fin, setFIN] = useState(""); //Finnish words
   const [state, setState] = useState(list); //main list
 
+  const getEnglish = async () => {
+    const result = await fetch("http://localhost:8080/Dictionary");
+    const list = await result.json();
+    const ui = list.map((index) => {
+      return (
+        <>
+          <TableComp
+            eng={index.eng}
+            id={index.id}
+            finnish={index.fin}
+            classname="textfield"
+            placeholder="input the finnish word"
+            onChanges={onChanges}
+          />{" "}
+        </>
+      );
+    });
+
+    console.log(ui);
+    setState(ui);
+  };
+
   const getFinnish = async () => {
     const result = await fetch("http://localhost:8080/Dictionary");
     const list2 = await result.json();
