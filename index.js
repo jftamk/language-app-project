@@ -4,8 +4,9 @@ const bp = require("body-parser");
 const express = require("express");
 const app = express();
 
-const listener = app.listen(8080, () => {
-  console.log(`Listening on port ${listener.address().port}`);
+const port = process.env.PORT || 8080;
+const server = app.listen(port, () => {
+  console.log(`Listening on port ${server.address().port}`);
 });
 
 app.use(express.static("frontend/build"));
