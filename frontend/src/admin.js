@@ -38,7 +38,11 @@ function ADMIN() {
     const data = { eng: eng, fin: fin, tag: tag };
     e.preventDefault();
     if (eng === "" || fin === "" || tag === "") {
-      setAlert(<Alert severity="error">Choose category!</Alert>);
+      setAlert(
+        <Alert variant="filled" severity="error">
+          Choose category!
+        </Alert>
+      );
     } else {
       const res = await fetch("http://localhost:8080/Dictionary", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -58,9 +62,16 @@ function ADMIN() {
       const b = init + 1;
       setInit(b);
       console.log(list);
-      let inputs = document.querySelectorAll("input");
-      inputs.forEach((input) => (input.value = ""));
-      setAlert("");
+
+      setAlert(
+        <Alert
+          onClose={() => {
+            setAlert("");
+          }}
+        >
+          New word added successfully!
+        </Alert>
+      );
     }
   }
 
@@ -118,6 +129,7 @@ function ADMIN() {
               >
                 <MenuItem value={"Colors"}>Colors</MenuItem>
                 <MenuItem value={"Animals"}>Animals</MenuItem>
+                <MenuItem value={"Vehicles"}>Vehicles</MenuItem>
                 <MenuItem value={"Other"}>Other</MenuItem>
               </Select>
             </FormControl>
