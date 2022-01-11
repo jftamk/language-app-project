@@ -3,7 +3,10 @@ import TableComp from "./table.js";
 import TableComp2 from "./table2.js";
 
 import Button from "@mui/material/Button";
-
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 //Init arrays
 const list = [];
 
@@ -11,6 +14,7 @@ function USER(props) {
   const [eng, setENG] = useState(""); //English words
   const [fin, setFIN] = useState(""); //Finnish words
   const [state, setState] = useState(list); //main list
+  const [category, setCategory] = useState(""); //Category items
 
   const getEnglish = async () => {
     const result = await fetch("http://localhost:8080/Dictionary");
@@ -73,7 +77,22 @@ function USER(props) {
         onClick={getFinnish}
       >
         From Finnish to English
-      </Button>
+      </Button>{" "}
+      <FormControl sx={{ m: 3, width: 200 }}>
+        <InputLabel id="simple-select-label">Category</InputLabel>
+        <Select
+          labelId="select-label"
+          id="simple-select"
+          value={category}
+          label="category"
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <MenuItem value={"Colors"}>Colors</MenuItem>
+          <MenuItem value={"Animals"}>Animals</MenuItem>
+          <MenuItem value={"Other"}>Other</MenuItem>
+          <MenuItem value={"All"}>All</MenuItem>
+        </Select>
+      </FormControl>
     </div>
   );
 }
