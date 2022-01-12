@@ -26,6 +26,10 @@ function ADMIN() {
   const [state, setState] = useState(list); //main list
   const [init, setInit] = useState(""); //Call useEffect on change
   const [alert, setAlert] = useState("");
+  const [editing, setediting] = useState(null);
+  const [EditEng, setEditEng] = useState("");
+  const [EditFin, setEditFin] = useState("");
+  const [EditTag, setEditTAG] = useState("");
   //Init with the todo list--------------
   useEffect(() => {
     fetch("http://localhost:8080/Dictionary/All")
@@ -110,6 +114,22 @@ function ADMIN() {
     });
     return await res.json();
   }
+  function editTodo(id) {
+    //Go through array and update values.
+    const updatedTodos = [...state].map((todo) => {
+      if (todo.id === id) {
+        todo.eng = EditEng;
+        todo.fin = EditFin;
+        todo.tag = EditTag;
+      }
+      return todo;
+    });
+    //Set state with updated values
+    setState(updatedTodos);
+
+    setediting(null);
+  }
+
   //Edit word--------------------------------
   async function editWord(id) {
     const data = { eng: eng, fin: fin, tag: tag };
@@ -195,7 +215,7 @@ function ADMIN() {
                   <TableCell>FINNISH</TableCell>
                   <TableCell>Category</TableCell>
                   <TableCell align="center" style={{ width: "10%" }}>
-                    Delete
+                    Options
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -208,6 +228,13 @@ function ADMIN() {
                       fin={index.fin}
                       id={index.id}
                       tag={index.tag}
+                      EditEng={EditEng}
+                      editTodo={editTodo}
+                      editing={editing}
+                      setediting={setediting}
+                      setEditEng={setEditEng}
+                      setEditFin={setEditFin}
+                      setEditTAG={setEditTAG}
                       deleteWord={deleteWord}
                     />
                   );
