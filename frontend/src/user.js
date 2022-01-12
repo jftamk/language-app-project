@@ -31,6 +31,7 @@ function USER(props) {
   const [again, setAgain] = useState(""); //For trying again, clear all
   const [answers, setAnswers] = useState(""); //For trying again, clear all
   const [alert, setAlert] = useState("");
+  const [alert2, setAlert2] = useState("");
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -235,7 +236,10 @@ function USER(props) {
       }
       setAnswers(checked);
     }
+
+    console.log(result);
   }
+
   async function TryAgain() {
     //Try again
     //Set the score back to 0
@@ -310,24 +314,8 @@ function USER(props) {
               </TableBody>
             </Table>
           </TableContainer>{" "}
-          <br></br>
-          <div
-            className="result"
-            style={{
-              margin: "30",
-              fontSize: "large",
-              textDecoration: "underline",
-            }}
-          >
-            <Alert
-              variant="filled"
-              severity="info"
-              size="large"
-              align="center"
-              sx={{ m: 3, width: 200 }}
-            >
-              {result}
-            </Alert>
+          <div style={{ margin: "20px", color: "blue", fontSize: "25px" }}>
+            {result}
           </div>
           {alert}
           {again}
