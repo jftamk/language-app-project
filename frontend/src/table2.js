@@ -6,7 +6,11 @@ import Input from "@mui/material/Input";
 function TableComp2(props) {
   const { type, name, placeholder } = props;
   async function afterInput(e) {
-    const a = e.target.value;
+    const ab = e.target.value;
+    const abc = ab.toLowerCase();
+    const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
+
+    const a = removeExtraSpace(abc);
     //If input === finnish word from database, call onChanges function in user.js
     if (a === props.eng) {
       props.onChanges(a, props.finnish);
@@ -22,6 +26,7 @@ function TableComp2(props) {
           <Input
             placeholder={placeholder}
             type="text"
+            pattern="[^\s]+"
             name={name}
             onBlur={afterInput}
           />
