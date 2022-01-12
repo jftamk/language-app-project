@@ -7,8 +7,11 @@ function TableComp(props) {
   const { type, name, placeholder } = props;
 
   async function afterInput(e) {
-    const a = e.target.value;
+    const ab = e.target.value;
+    const abc = ab.toLowerCase();
+    const removeExtraSpace = (s) => s.trim().split(/ +/).join(" ");
 
+    const a = removeExtraSpace(abc);
     //If input === finnish word from database, call onChanges function in user.js
     if (a === props.finnish) {
       props.onChanges(a, props.eng);
@@ -24,6 +27,7 @@ function TableComp(props) {
           <Input
             placeholder={placeholder}
             type="text"
+            pattern="[^\s]+"
             name={name}
             onBlur={afterInput}
           />
