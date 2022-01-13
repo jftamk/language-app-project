@@ -6,7 +6,7 @@ import USER from "./user";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <nav className="navbar">
           <ul>
@@ -48,7 +48,7 @@ function App() {
           />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
