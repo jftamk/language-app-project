@@ -32,7 +32,7 @@ function ADMIN() {
   const [EditTag, setEditTAG] = useState("");
   //Init with the todo list--------------
   useEffect(() => {
-    fetch("http://localhost:8080/Dictionary/All")
+    fetch("/Dictionary/All")
       .then((response) => response.json())
       .then((data) => setState(data));
   }, [init]); //For handlesubmit()
@@ -61,7 +61,7 @@ function ADMIN() {
         </Alert>
       );
     } else {
-      const res = await fetch("http://localhost:8080/Dictionary", {
+      const res = await fetch("/Dictionary", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -105,7 +105,7 @@ function ADMIN() {
     // const json = JSON.stringify(ok);
     setState(ok); //Update state --> Create list where id is not included
     console.log(id);
-    const res = await fetch("http://localhost:8080/Dictionary/" + id, {
+    const res = await fetch("/Dictionary/" + id, {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
@@ -145,7 +145,7 @@ function ADMIN() {
     console.log(data);
     console.log(id);
     //Search right word by id and replace with new word
-    const res = await fetch("http://localhost:8080/Dictionary/" + id, {
+    const res = await fetch("/Dictionary/" + id, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -201,7 +201,8 @@ function ADMIN() {
                 <MenuItem value={"Other"}>Other</MenuItem>
               </Select>
             </FormControl>
-            {alert};<br></br>{" "}
+            {alert}
+            <br></br>{" "}
             <Button
               variant="contained"
               sx={{ my: 3, width: 200 }}
@@ -216,11 +217,7 @@ function ADMIN() {
         <div classname="listdisplay">
           <h2>DICTIONARY</h2>
           <TableContainer component={Paper}>
-            <Table
-              sx={{ minWidth: 650 }}
-              size="small"
-              aria-label="a dense table"
-            >
+            <Table size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
                   <TableCell>ENGLISH</TableCell>
