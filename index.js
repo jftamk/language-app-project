@@ -84,3 +84,14 @@ dictionary.get("/:tag([A-Z]+)", async (req, res) => {
     res.status(500).send(err);
   }
 });
+dictionary.post("/:id([0-9]+)", async (req, res) => {
+  let word = req.body;
+  let id = req.params.id;
+  const validation = validator.validate(word, schema); //Check if there's validation errors
+  if (validation.errors.length > 0) {
+    res.status(400).send(validation.errors); //STATUS 400 Bad request
+  } else {
+    await pool.update(word, id);
+    res.status(201).send(word); //STATUS 201 Created, successful request and new resource created.
+  }
+});
