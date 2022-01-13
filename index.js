@@ -9,7 +9,7 @@ const server = app.listen(port, () => {
   console.log(`Listening on port ${server.address().port}`);
 });
 
-app.use(express.static("frontend/public"));
+app.use(express.static("public"));
 
 const Validator = require("jsonschema").Validator; //Validator for checking that values are right type when making POST request.
 const validator = new Validator();
