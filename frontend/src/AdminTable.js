@@ -18,6 +18,7 @@ function AdminTable(props) {
       <TableCell>{props.eng}</TableCell>
       <TableCell>{props.fin}</TableCell>
       <TableCell>{props.tag}</TableCell>
+      {/**If edit button clicked, setediting is set. Take words as input and after clicking Finish changes, call editWord */}
       <TableCell>
         {props.id === props.editing ? (
           <>
@@ -56,7 +57,7 @@ function AdminTable(props) {
           <>
             <Button
               onClick={() =>
-                props.editTodo(props.id, props.eng, props.fin, props.tag)
+                props.editWord(props.id, props.eng, props.fin, props.tag)
               }
             >
               Finish changes
