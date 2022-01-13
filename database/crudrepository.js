@@ -73,6 +73,24 @@ let connection = {
       });
     }
     return new Promise(find);
+  }, //for POST REQUEST
+
+  //for UPDATE REQUEST
+  update: (word, id) => {
+    function insert(resolve, reject) {
+      pool.query(
+        "UPDATE Dictionary SET ? WHERE id=?",
+        [word, id],
+        (err, words) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve([word, id], words);
+          }
+        }
+      );
+    }
+    return new Promise(insert);
   },
 };
 
