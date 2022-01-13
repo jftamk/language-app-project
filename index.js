@@ -8,8 +8,8 @@ const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
   console.log(`Listening on port ${server.address().port}`);
 });
-
-app.use(express.static("public"));
+const path = require("path");
+app.use(express.static(path.resolve(__dirname, "build")));
 
 const Validator = require("jsonschema").Validator; //Validator for checking that values are right type when making POST request.
 const validator = new Validator();
