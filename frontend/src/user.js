@@ -282,6 +282,7 @@ function USER(props) {
       >
         From Finnish to English
       </Button>{" "}
+      {/**For selecting category*/}
       <FormControl sx={{ m: 3, width: 200 }}>
         <InputLabel id="simple-select-label">Category</InputLabel>
         <Select
@@ -291,6 +292,7 @@ function USER(props) {
           label="category"
           onChange={(e) => setCategory(e.target.value)}
         >
+          {/**Categories */}
           <MenuItem value={"Colors"}>Colors</MenuItem>
           <MenuItem value={"Animals"}>Animals</MenuItem>
           <MenuItem value={"Vehicles"}>Vehicles</MenuItem>
