@@ -114,8 +114,18 @@ function ADMIN() {
     });
     return await res.json();
   }
-  function editTodo(id) {
+  async function editTodo(id, a, b, c) {
     //Go through array and update values.
+    if (EditEng === "") {
+      setEditEng(a);
+    }
+    if (EditFin === "") {
+      setEditFin(b);
+    }
+    if (EditTag === "") {
+      setEditTAG(c);
+    }
+    console.log(a, b, c);
     const updatedTodos = [...state].map((todo) => {
       if (todo.id === id) {
         todo.eng = EditEng;
@@ -126,19 +136,15 @@ function ADMIN() {
     });
     //Set state with updated values
     setState(updatedTodos);
-
     setediting(null);
-  }
-
-  //Edit word--------------------------------
-  async function editWord(id) {
-    const data = { eng: eng, fin: fin, tag: tag };
-    const ok = [...state].filter((todo) => todo.id !== id);
-    // const json = JSON.stringify(ok);
-    setState(ok); //Update state --> Create list where id is not included
+    var data = { eng: EditEng, fin: EditFin, tag: EditTag };
+    console.log(data);
     console.log(id);
     const res = await fetch("http://localhost:8080/Dictionary/" + id, {
-      method: "PUT", // *GET, POST, PUT, DELETE, etc.
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -147,7 +153,8 @@ function ADMIN() {
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
-    return await res.json();
+    const list = await res.json();
+    console.log(list);
   }
 
   return (
@@ -215,7 +222,10 @@ function ADMIN() {
                   <TableCell>FINNISH</TableCell>
                   <TableCell>Category</TableCell>
                   <TableCell align="center" style={{ width: "10%" }}>
-                    Options
+                    Edit
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "10%" }}>
+                    Delete
                   </TableCell>
                 </TableRow>
               </TableHead>
