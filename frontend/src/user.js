@@ -36,7 +36,7 @@ function USER(props) {
   //Fetch list with selected category--------------
   useEffect(() => {
     const fetchData = async () => {
-      setURL("http://localhost:8080/Dictionary/" + category);
+      setURL("/Dictionary/" + category);
     };
 
     fetchData();
@@ -303,11 +303,7 @@ function USER(props) {
       <div classname="listdisplay">
         <div className="dictionary">
           <TableContainer component={Paper}>
-            <Table
-              sx={{ minWidth: 650 }}
-              size="small"
-              aria-label="a dense table"
-            >
+            <Table size="small" aria-label="a dense table">
               {" "}
               {header}
               <TableBody>
