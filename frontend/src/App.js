@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Route,
+  Routes,
+  Link,
+} from "react-router-dom";
 import "./App.css";
 import ADMIN from "./admin";
 import USER from "./user";
