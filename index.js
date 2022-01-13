@@ -3,7 +3,7 @@ const bp = require("body-parser");
 
 const express = require("express");
 const app = express();
-
+//Listen which port to use
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
   console.log(`Listening on port ${server.address().port}`);
@@ -84,6 +84,8 @@ dictionary.get("/:tag([A-Z]+)", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+//UPDATE WITH NEW WORD ON CERTAIN ID
 dictionary.post("/:id([0-9]+)", async (req, res) => {
   let word = req.body;
   let id = req.params.id;
