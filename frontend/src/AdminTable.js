@@ -9,7 +9,7 @@ import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 function AdminTable(props) {
   //Take props from admin.js and return as tablebody while mapping the database.
   //props.deleteWord --> call admin.js to trigger delete function with current id and the matching word.
@@ -19,31 +19,23 @@ function AdminTable(props) {
       <TableCell>{props.fin}</TableCell>
       <TableCell>{props.tag}</TableCell>
       <TableCell>
-        <IconButton
-          aria-label="delete"
-          size="small"
-          onClick={() => {
-            props.deleteWord(props.id);
-          }}
-        >
-          <DeleteIcon />
-        </IconButton>{" "}
         {props.id === props.editing ? (
           <>
             {" "}
             <Input
               type="text"
               placeholder="English word"
-              value={props.EditEng}
+              defaultValue={props.eng}
               onChange={(e) => props.setEditEng(e.target.value)}
             />{" "}
             <Input
               type="text"
               placeholder="Finnish word"
+              defaultValue={props.fin}
               onChange={(e) => props.setEditFin(e.target.value)}
             />{" "}
             <FormControl sx={{ m: 3, width: 150 }}>
-              <InputLabel id="simple-select-label">Category</InputLabel>
+              <InputLabel id="simple-select-label">{props.tag}</InputLabel>
               <Select
                 labelId="simple-select-label"
                 id="simple-select"
@@ -62,7 +54,11 @@ function AdminTable(props) {
         )}
         {props.id === props.editing ? (
           <>
-            <Button onClick={() => props.editTodo(props.id)}>
+            <Button
+              onClick={() =>
+                props.editTodo(props.id, props.eng, props.fin, props.tag)
+              }
+            >
               Finish changes
             </Button>
             <Button
@@ -74,11 +70,20 @@ function AdminTable(props) {
             </Button>
           </>
         ) : (
-          <Button onClick={() => props.setediting(props.id)}>
-            <EditIcon />
-          </Button>
+          <Button onClick={() => props.setediting(props.id)}>Edit</Button>
         )}
-      </TableCell>
+      </TableCell>{" "}
+      <TableCell>
+        <IconButton
+          aria-label="delete"
+          size="small"
+          onClick={() => {
+            props.deleteWord(props.id);
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>{" "}
+      </TableCell>{" "}
     </TableRow>
   );
 }
