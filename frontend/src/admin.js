@@ -41,6 +41,7 @@ function ADMIN() {
   async function handleSubmit(e) {
     const data = { eng: eng, fin: fin, tag: tag };
     e.preventDefault();
+    //Make checks that all inputs are filled
     if (eng === "") {
       setAlert(
         <Alert variant="filled" severity="error">
@@ -78,7 +79,7 @@ function ADMIN() {
       const b = init + 1;
       setInit(b);
       console.log(list);
-
+      //Alert the user that adding was done
       setAlert(
         <Alert
           onClose={() => {
@@ -88,9 +89,10 @@ function ADMIN() {
           New word added successfully!
         </Alert>
       );
-      setFIN("");
-      setENG("");
-      setTAG("");
+      setFIN(""); //clear finnish word
+      setENG(""); //clear english word
+      setTAG(""); //clear tags
+      //Remove alert after 3 seconds
       setTimeout(() => {
         setAlert("");
       }, 3000);
@@ -115,7 +117,7 @@ function ADMIN() {
     return await res.json();
   }
   async function editTodo(id, a, b, c) {
-    //Go through array and update values.
+    //Take existing word as new word if user dont write anything new
     if (EditEng === "") {
       setEditEng(a);
     }
@@ -126,6 +128,7 @@ function ADMIN() {
       setEditTAG(c);
     }
     console.log(a, b, c);
+    //Create new state with updated words
     const updatedTodos = [...state].map((todo) => {
       if (todo.id === id) {
         todo.eng = EditEng;
@@ -137,9 +140,11 @@ function ADMIN() {
     //Set state with updated values
     setState(updatedTodos);
     setediting(null);
+    //Object with new inputs
     var data = { eng: EditEng, fin: EditFin, tag: EditTag };
     console.log(data);
     console.log(id);
+    //Search right word by id and replace with new word
     const res = await fetch("http://localhost:8080/Dictionary/" + id, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
