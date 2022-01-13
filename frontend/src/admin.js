@@ -116,7 +116,7 @@ function ADMIN() {
     });
     return await res.json();
   }
-  async function editTodo(id, a, b, c) {
+  async function editWord(id, a, b, c) {
     //Take existing word as new word if user dont write anything new
     if (EditEng === "") {
       setEditEng(a);
@@ -244,7 +244,7 @@ function ADMIN() {
                       id={index.id}
                       tag={index.tag}
                       EditEng={EditEng}
-                      editTodo={editTodo}
+                      editWord={editWord}
                       editing={editing}
                       setediting={setediting}
                       setEditEng={setEditEng}
