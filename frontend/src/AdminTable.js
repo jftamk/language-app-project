@@ -9,16 +9,43 @@ import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
+
 function AdminTable(props) {
+  async function editbutton() {
+    //If some input is not changed, keep original.
+    if (props.EditEng === "") {
+      props.setEditEng(props.eng);
+    }
+
+    if (props.EditFin === "") {
+      props.setEditFin(props.fin);
+    }
+    if (props.EditTag === "") {
+      props.setEditTAG(props.tag);
+    }
+
+    //Then set editing to edit mode by taking id -- props.id===props.editing
+    props.setediting(props.id);
+  }
+  async function changes(e) {
+    //First trigger the editWord function in admin.js to make edits for the word.
+    await props.editWord(props.id, props.eng, props.fin, props.tag);
+
+    /*After setting new edits, set edit values back to null so they
+    can get new values if input is not changed in edit.*/
+    props.setEditEng("");
+    props.setEditFin("");
+    props.setEditTAG("");
+  }
   //Take props from admin.js and return as tablebody while mapping the database.
-  //props.deleteWord --> call admin.js to trigger delete function with current id and the matching word.
+
   return (
     <TableRow>
       <TableCell>{props.eng}</TableCell>
       <TableCell>{props.fin}</TableCell>
       <TableCell>{props.tag}</TableCell>
-      {/**If edit button clicked, setediting is set. Take words as input and after clicking Finish changes, call editWord */}
+      {/**After edit button clicked, setediting is set (editing==props.id).
+       * Take words as input and after clicking Finish changes, call editWord in admin.js */}
       <TableCell>
         {props.id === props.editing ? (
           <>
@@ -33,12 +60,14 @@ function AdminTable(props) {
               type="text"
               placeholder="Finnish word"
               defaultValue={props.fin}
+              ref={Input}
               onChange={(e) => props.setEditFin(e.target.value)}
             />{" "}
-            <FormControl sx={{ m: 3, width: 150 }}>
+            <FormControl sx={{ my: 2, width: 120 }}>
               <InputLabel id="simple-select-label">{props.tag}</InputLabel>
               <Select
                 labelId="simple-select-label"
+                defaultValue={props.tag}
                 id="simple-select"
                 label="category"
                 onChange={(e) => props.setEditTAG(e.target.value)}
@@ -55,11 +84,7 @@ function AdminTable(props) {
         )}
         {props.id === props.editing ? (
           <>
-            <Button
-              onClick={() =>
-                props.editWord(props.id, props.eng, props.fin, props.tag)
-              }
-            >
+            <Button variant="contained" sx={{ mb: 2 }} onClick={changes}>
               Finish changes
             </Button>
             <Button
@@ -71,9 +96,19 @@ function AdminTable(props) {
             </Button>
           </>
         ) : (
-          <Button onClick={() => props.setediting(props.id)}>Edit</Button>
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ mb: 2 }}
+            onClick={editbutton}
+          >
+            Edit
+          </Button>
         )}
       </TableCell>{" "}
+      {/** props.deleteWord --> call admin.js function deleteWord
+       *  to trigger delete function with current
+       *  id and the matching word. */}
       <TableCell>
         <IconButton
           aria-label="delete"
