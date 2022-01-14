@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import TableComp from "./table.js";
 import TableComp2 from "./table2.js";
 
@@ -16,7 +16,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import { Alert } from "@mui/material";
 
-//Init arrays
+//Init arrays, score and language
 const list = [];
 var score = 0;
 var lang = "";
@@ -30,8 +30,7 @@ function USER(props) {
   const [result, setResult] = useState(""); //For results
   const [again, setAgain] = useState(""); //For trying again, clear all
   const [answers, setAnswers] = useState(""); //For trying again, clear all
-  const [alert, setAlert] = useState("");
-  const [alert2, setAlert2] = useState("");
+  const [alert, setAlert] = useState(""); //For alerts
 
   //Fetch list with selected category--------------
   useEffect(() => {
@@ -43,9 +42,6 @@ function USER(props) {
   }, [category]);
 
   //Fetch where English visible and Finnish as input
-  /**
-   * @return {state} with English visible and Finnish as input
-   */
   const getEnglish = async () => {
     //Clear after calling
     score = 0;
@@ -62,6 +58,7 @@ function USER(props) {
       return (
         <>
           <TableComp
+            key={index.id}
             eng={index.eng}
             id={index.id}
             finnish={index.fin}
@@ -103,6 +100,7 @@ function USER(props) {
       return (
         <>
           <TableComp2
+            key={index.id}
             eng={index.eng}
             id={index.id}
             finnish={index.fin}
@@ -127,20 +125,24 @@ function USER(props) {
     );
   };
 
+  /*If word checked as correct in table/table2.js
+  Push it to list as correct and add one to score
+  */
   async function onChanges(b, a) {
     answerlist.push({ eng: a, correct: b });
-    console.log(b);
-    console.log(a);
-
     score++;
   }
 
+  /*If word checked as correct in table/table2.js
+  Push it to list as wrong.
+  */
   async function onWrong(b, a) {
     answerlist.push({ eng: a, wrong: b });
-    console.log(b);
-    console.log(a);
   }
 
+  /**Check results after button click.
+   * Check for answers and print out score.
+   */
   async function checkresult() {
     console.log(urls);
     if (state === list) {
@@ -159,6 +161,7 @@ function USER(props) {
       const check = "YOUR SCORE: " + score + "/" + state.length;
       setResult(check);
 
+      //Inform user if all answers were correct.
       if (score === state.length) {
         setAlert(
           <Alert
@@ -172,7 +175,7 @@ function USER(props) {
       } else {
         setAlert("");
       }
-
+      //Button for trying again, call TryAgain function
       setAgain(
         <Button
           variant="contained"
@@ -182,8 +185,10 @@ function USER(props) {
           Try again
         </Button>
       );
-      //Fetch english list
-      console.log(answerlist);
+      /**
+       *  Fetch list with original word, correct and wrong answers.
+       * Set colors according to correct or incorrect answers.
+       */
       const checked = answerlist.map((index) => {
         return (
           <>
@@ -202,9 +207,11 @@ function USER(props) {
           </>
         );
       });
+      //Clear previous state to show results.
       state1 = state;
       setState("");
 
+      //If language is eng, show ENGLISH in the header with results
       if (lang === "eng") {
         setHeader(
           <TableHead>
@@ -220,6 +227,7 @@ function USER(props) {
           </TableHead>
         );
       } else {
+        //If language is not eng(=FINNISH), show FINNISH in the header with results
         setHeader(
           <TableHead>
             <TableRow>
@@ -236,19 +244,16 @@ function USER(props) {
       }
       setAnswers(checked);
     }
-
-    console.log(result);
   }
 
   async function TryAgain() {
     //Try again
-    //Set the score back to 0
-    score = 0;
-    answerlist = [];
-    setState(state1);
-    setResult("");
-    setAnswers("");
-    setAlert("");
+    score = 0; //Set score to 0
+    answerlist = []; //Set answers back to empty list
+    setState(state1); //Set state to previous state
+    setResult(""); //Hide results from showing
+    setAnswers(""); //Hide answers from showing
+    setAlert(""); //Clear alerts
     setHeader(
       <TableHead>
         <TableRow>
@@ -260,13 +265,14 @@ function USER(props) {
     //Find all inputs and set their value back to empty.
     let inputs = document.querySelectorAll("input");
     inputs.forEach((input) => (input.value = ""));
-    setAgain("");
+    setAgain(""); //Hide try again button
   }
 
   return (
     <div className="Apps">
       <h1>Learn languages!</h1>
       <h2>Translate the words</h2>
+      {/**Select which language to practise. */}
       <Button
         variant="contained"
         sx={{ m: 3, width: 200 }}
@@ -300,30 +306,32 @@ function USER(props) {
           <MenuItem value={"All"}>All</MenuItem>
         </Select>
       </FormControl>
-      <div classname="listdisplay">
+      <div className="listdisplay">
+        {/**Display selected table with right category and right language */}
         <div className="dictionary">
           <TableContainer component={Paper}>
             <Table size="small" aria-label="a dense table">
               {" "}
               {header}
               <TableBody>
-                {state}
-                {answers}
+                {state} {/**For displaying words to guess */}
+                {answers} {/**For displaying correct answers.*/}
               </TableBody>
             </Table>
           </TableContainer>{" "}
           <div style={{ margin: "20px", color: "blue", fontSize: "25px" }}>
-            {result}
+            {result} {/**Displays score */}
           </div>
-          {alert}
-          {again}
+          {alert} {/**Space for alerts */}
+          {again} {/**Try again button*/}
           <Button
             variant="contained"
             sx={{ m: 3, width: 200 }}
             onClick={checkresult}
           >
             Check results
-          </Button>
+          </Button>{" "}
+          {/**Button for checking results -> calls checkresult function*/}
         </div>
       </div>
     </div>
