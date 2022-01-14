@@ -5,7 +5,7 @@ require("dotenv").config();
 //Info in env file
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: "mydb.tamk.fi",
+  host: process.env.host,
   user: process.env.user,
   password: process.env.password,
   database: process.env.database,
