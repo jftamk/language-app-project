@@ -9,6 +9,9 @@ The purpose of this project is to make an application that can be used to train 
 
 -MySQL Database which is accessed using mysql - module
 
+# Screencast
+Youtube link to screencast:
+
 # Screenshots
 FOR ADMIN
 
