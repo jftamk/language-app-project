@@ -9,3 +9,5 @@ The purpose of this project is to make an application that can be used to train 
 
 -MySQL Database which is accessed using mysql - module
 
+# Screenshots
+![Näyttökuva (36)](https://user-images.githubusercontent.com/77788188/149497877-10837169-f997-46dd-b72a-790e5a63ea1d.png)
