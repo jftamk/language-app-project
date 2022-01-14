@@ -32,7 +32,7 @@ function ADMIN() {
   const [EditTag, setEditTAG] = useState(""); // For editing tag
   //Init with the correct list--------------
   useEffect(() => {
-    fetch("http://localhost:8080/Dictionary/All")
+    fetch("Dictionary/All")
       .then((response) => response.json())
       .then((data) => setState(data));
   }, [init]); //For handlesubmit()
@@ -63,7 +63,7 @@ function ADMIN() {
       );
     } else {
       //Finally, make POST request
-      const res = await fetch("http://localhost:8080/Dictionary", {
+      const res = await fetch("Dictionary", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -109,7 +109,7 @@ function ADMIN() {
     setState(ok);
     console.log(id);
     //DELETE request for the backend with selected word id.
-    await fetch("http://localhost:8080/Dictionary/" + id, {
+    await fetch("Dictionary/" + id, {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +138,7 @@ function ADMIN() {
     var data = { eng: EditEng, fin: EditFin, tag: EditTag };
 
     //Search right word by id and replace with new word
-    const res = await fetch("http://localhost:8080/Dictionary/" + id, {
+    const res = await fetch("Dictionary/" + id, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
