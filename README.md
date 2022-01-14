@@ -14,5 +14,6 @@ FOR ADMIN
 
 Dictionary display and possibility to add new items with categories.
 ADMIN can also edit and delete words.
-![admin1](https://user-images.githubusercontent.com/77788188/149498725-dbe57c8f-433d-43df-b1cc-e2870d10aaa3.jpg)![admin2](https://user-images.githubusercontent.com/77788188/149499500-673c8bc0-e250-40bb-a505-40775beeb494.png)
+![admin1](https://user-images.githubusercontent.com/77788188/149498725-dbe57c8f-433d-43df-b1cc-e2870d10aaa3.jpg)
+![admin2](https://user-images.githubusercontent.com/77788188/149499500-673c8bc0-e250-40bb-a505-40775beeb494.png)
 
