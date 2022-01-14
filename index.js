@@ -12,7 +12,7 @@ const path = require("path");
 
 //This will create a middleware.
 //When you navigate to the root page, it would use the built react-app
-app.use(express.static(path.resolve(__dirname, "./frontend/build")));
+app.use(express.static(path.resolve(__dirname, "./frontend/public")));
 //app.use(express.static("frontend/build"));
 
 const Validator = require("jsonschema").Validator; //Validator for checking that values are right type when making POST request.
