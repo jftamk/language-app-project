@@ -15,7 +15,9 @@ There's page for admin that can create and control words. User can practise them
 Youtube link to screencast: https://youtu.be/O2pDYY6AwsY
 
 # How to use
--After cloning, move to root folder and npm install
+-git clone this repository
+
+-move to root folder and npm install
 
 -node index.js
 
