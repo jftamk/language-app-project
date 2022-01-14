@@ -9,6 +9,17 @@ The purpose of this project is to make an application that can be used to train 
 
 -MySQL Database which is accessed using mysql - module
 
+# Screencast
+Youtube link to screencast: https://youtu.be/O2pDYY6AwsY
+
+# How to use
+-After cloning, move to root folder and npm install
+-node index.js
+cd frontend
+-npm install
+cd src
+-npm start
+
 # Screenshots
 FOR ADMIN
 
