@@ -25,20 +25,21 @@ function ADMIN() {
   const [tag, setTAG] = useState(""); //Categories
   const [state, setState] = useState(list); //main list
   const [init, setInit] = useState(""); //Call useEffect on change
-  const [alert, setAlert] = useState("");
-  const [editing, setediting] = useState(null);
-  const [EditEng, setEditEng] = useState("");
-  const [EditFin, setEditFin] = useState("");
-  const [EditTag, setEditTAG] = useState("");
-  //Init with the todo list--------------
+  const [alert, setAlert] = useState(""); //Alerts
+  const [editing, setediting] = useState(null); //sets editing to ide number so edit is triggered in AdminTable.js
+  const [EditEng, setEditEng] = useState(""); //For editing english word
+  const [EditFin, setEditFin] = useState(""); // For editing finnish word
+  const [EditTag, setEditTAG] = useState(""); // For editing tag
+  //Init with the correct list--------------
   useEffect(() => {
-    fetch("/Dictionary/All")
+    fetch("http://localhost:8080/Dictionary/All")
       .then((response) => response.json())
       .then((data) => setState(data));
   }, [init]); //For handlesubmit()
 
-  //Add to do item-----------------------
+  //Add new word to the list-----------------------
   async function handleSubmit(e) {
+    //Object with new words
     const data = { eng: eng, fin: fin, tag: tag };
     e.preventDefault();
     //Make checks that all inputs are filled
@@ -61,7 +62,8 @@ function ADMIN() {
         </Alert>
       );
     } else {
-      const res = await fetch("/Dictionary", {
+      //Finally, make POST request
+      const res = await fetch("http://localhost:8080/Dictionary", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -72,13 +74,14 @@ function ADMIN() {
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data), // body data type must match "Content-Type" header
+        body: JSON.stringify(data), // data object made before
       });
       const list = await res.json();
-      //Call new state after adding item to database
+      console.log(list);
+      //Call new state after adding item to database(updated version with new word)
       const b = init + 1;
       setInit(b);
-      console.log(list);
+
       //Alert the user that adding was done
       setAlert(
         <Alert
@@ -101,11 +104,12 @@ function ADMIN() {
 
   //Delete word--------------------------------
   async function deleteWord(id) {
+    //Update state --> Create list where deleted id is not included
     const ok = [...state].filter((todo) => todo.id !== id);
-    // const json = JSON.stringify(ok);
-    setState(ok); //Update state --> Create list where id is not included
+    setState(ok);
     console.log(id);
-    const res = await fetch("/Dictionary/" + id, {
+    //DELETE request for the backend with selected word id.
+    await fetch("http://localhost:8080/Dictionary/" + id, {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
@@ -114,22 +118,12 @@ function ADMIN() {
       redirect: "follow", // manual, *follow, error
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     });
-    return await res.json();
   }
+
+  //Editing word in the list
   async function editWord(id, a, b, c) {
-    //Take existing word as new word if user dont write anything new
-    if (EditEng === "") {
-      setEditEng(a);
-    }
-    if (EditFin === "") {
-      setEditFin(b);
-    }
-    if (EditTag === "") {
-      setEditTAG(c);
-    }
-    console.log(a, b, c);
-    //Create new state with updated words
-    const updatedTodos = [...state].map((todo) => {
+    //Create new state with updated words (updated list)
+    const updatedWords = [...state].map((todo) => {
       if (todo.id === id) {
         todo.eng = EditEng;
         todo.fin = EditFin;
@@ -138,14 +132,13 @@ function ADMIN() {
       return todo;
     });
     //Set state with updated values
-    setState(updatedTodos);
+    setState(updatedWords);
     setediting(null);
     //Object with new inputs
     var data = { eng: EditEng, fin: EditFin, tag: EditTag };
-    console.log(data);
-    console.log(id);
+
     //Search right word by id and replace with new word
-    const res = await fetch("/Dictionary/" + id, {
+    const res = await fetch("http://localhost:8080/Dictionary/" + id, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -167,6 +160,9 @@ function ADMIN() {
       <h1>Dictionary</h1>
       <div className="container">
         <div className="settings">
+          {/**For adding new word
+           *
+           */}
           <h2>ADD NEW</h2>
           <div className="listadd">
             <p>ENGLISH: </p>
@@ -213,8 +209,8 @@ function ADMIN() {
           </div>
           <br></br>
         </div>
-
-        <div classname="listdisplay">
+        {/**For displaying dictionary*/}
+        <div className="listdisplay">
           <h2>DICTIONARY</h2>
           <TableContainer component={Paper}>
             <Table size="small" aria-label="a dense table">
@@ -241,6 +237,8 @@ function ADMIN() {
                       id={index.id}
                       tag={index.tag}
                       EditEng={EditEng}
+                      EditFin={EditFin}
+                      EditTag={EditTag}
                       editWord={editWord}
                       editing={editing}
                       setediting={setediting}
