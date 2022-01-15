@@ -35,7 +35,7 @@ function USER(props) {
   //Fetch list with selected category--------------
   useEffect(() => {
     const fetchData = async () => {
-      setURL("http://localhost:8080/Dictionary/" + category);
+      setURL("/Dictionary/" + category);
     };
 
     fetchData();
