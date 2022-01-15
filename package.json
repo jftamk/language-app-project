@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "cd frontend && npm install && npm run build",
-    "start": "node index.js"
+    "start": "node index.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/jftamk/language-app-project#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^12.0.3",
     "express": "^4.17.2",
     "jsonschema": "^1.4.0",
     "mysql": "^2.18.1",
