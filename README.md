@@ -14,8 +14,6 @@ There's page for admin that can create and control words. User can practise them
 # Heroku
 Link to heroku: https://language-app-joni.herokuapp.com/
 
-# Screencast
-Youtube link to screencast: https://youtu.be/O2pDYY6AwsY
 
 # How to use
 -git clone this repository
