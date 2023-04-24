@@ -11,9 +11,6 @@ There's page for admin that can create and control words. User can practise them
 
 -MySQL Database which is accessed using mysql - module
 
-# Heroku
-Link to heroku: https://language-app-joni.herokuapp.com/
-
 
 # How to use
 -git clone this repository
